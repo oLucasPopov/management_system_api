@@ -16,7 +16,7 @@ module.exports = {
             .offset((page - 1) * 5)
             .select(['id', 'estado'])
 
-        res.header('X-Total-Count', count['count(*)'])
+        res.header('X-Total-Count', count['count'])
         return res.json(estados)
     },
     async create(req, res) {
