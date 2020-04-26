@@ -28,24 +28,35 @@ module.exports = {
     async create(req, res) {
         try {
             const { id_estado, cidade } = req.body
+
+            const [estados = count] = await connection('cidades').where({ id_estado, cidade }).count()
+            if (estados.count > 0) throw { code: '23505' }
+
             await connection('cidades').insert({ id_estado, cidade })
             return res.sendStatus(200)
         } catch (e) {
             switch (e.code) {
                 case '23505':
-                    return res.status(409).json({ error: 'Estado já existe!' })
+                    return res.status(409).json({ error: 'A cidade que você está tentando cadastrar já existe!' })
                 case '23503':
                     return res.status(404).json({ error: 'O estado informado não existe!' })
                 default:
                     console.log(e)
             }
-
         }
     },
 
     async update(req, res) {
         try {
             const { id, id_estado, cidade } = req.body
+
+            const [estados = count] = await connection('cidades')
+                .whereNot({id})
+                .andWhere({id_estado, cidade})
+                .count()
+                
+            if (estados.count > 0) throw { code: '23505' }
+
             await connection('cidades')
                 .where('id', id)
                 .update({ id_estado, cidade })
@@ -54,12 +65,12 @@ module.exports = {
         } catch (e) {
             switch (e.code) {
                 case '23505':
-                    return res.status(409).json({ error: 'Estado já existe!' })
+                    return res.status(409).json({ error: 'A cidade que você está tentando cadastrar já existe!' })
                 case '23503':
-                    return res.status(404).json({ error: 'O estado ou a cidade informados não existem!' })
+                    return res.status(404).json({ error: 'O estado ou a cidade que foi informada não existe!' })
                 default:
                     console.log(e)
-                    return e
+                    return res.status(418).json(e)
             }
         }
     },
