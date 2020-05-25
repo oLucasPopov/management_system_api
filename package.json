@@ -4,12 +4,13 @@
   "description": "Sistema básico para gerenciamento de empresas que trabalham com encomendas.",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "author": "Lucas Popov",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "express-validator": "^6.5.0",
     "knex": "^0.21.0",
     "pg": "^8.0.3"
   },

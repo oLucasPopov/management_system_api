@@ -12,10 +12,10 @@ exports.up = function (knex) {
         t.string('email')
         t.boolean('bloqueado').notNullable().defaultTo(false)
 
-        t.unique(['cpf', 'cnpj'])
+        
     })
 };
 
 exports.down = function (knex) {
-    return knex.schema.droptable('clientes')
+    return knex.schema.dropTable('clientes')
 };

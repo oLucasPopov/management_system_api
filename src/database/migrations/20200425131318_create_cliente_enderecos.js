@@ -9,7 +9,7 @@ exports.up = function (knex) {
         t.string('bairro').notNullable()
         t.string('complemento', 32)
 
-        t.foreign('id_cliente').references('id').inTable('clientes')
+        t.foreign('id_cliente').references('id').inTable('clientes').onDelete('CASCADE')
         t.foreign('id_cidade').references('id').inTable('cidades')
     })
 };

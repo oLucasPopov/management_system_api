@@ -33,7 +33,7 @@ module.exports = {
             if (estados.count > 0) throw { code: '23505' }
 
             await connection('cidades').insert({ id_estado, cidade })
-            return res.sendStatus(200)
+            return res.sendStatus(204)
         } catch (e) {
             switch (e.code) {
                 case '23505':
@@ -60,7 +60,7 @@ module.exports = {
             await connection('cidades')
                 .where('id', id)
                 .update({ id_estado, cidade })
-            return res.sendStatus(200)
+            return res.sendStatus(204)
 
         } catch (e) {
             switch (e.code) {
@@ -81,8 +81,7 @@ module.exports = {
             await connection('cidades').where('id', id).delete()
             return res.sendStatus(204)
         } catch (e) {
-            console.log(e)
-            return e
+            return res.json(e)
         }
     }
 }
