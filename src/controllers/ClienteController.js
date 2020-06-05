@@ -6,7 +6,11 @@ module.exports = {
         const { id } = req.params
         const cliente = await connection('clientes')
             .select('*')
-            .where({id})
+            .where({ id })
+
+        if (cliente.length == 0)
+            return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
         return res.json(cliente)
     },
 
@@ -14,15 +18,18 @@ module.exports = {
         try {
             const itemsPerPage = 10
             const { page = 1 } = req.params
-            const [count] = await connection('clientes').count()
+            const [{ count }] = await connection('clientes').count()
 
             const clientes = await connection('clientes')
                 .limit(10)
                 .offset((page - 1) * itemsPerPage)
-                .select(['clientes.*']).groupBy('clientes.id')
+                .select(['clientes.*'])
 
-            res.header('X-Total-Count', count['count'])
-            res.header('X-Total-Pages', Math.ceil(count['count'] / itemsPerPage))
+            if (clientes.length == 0)
+                return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
+            res.header('X-Total-Count', count)
+            res.header('X-Total-Pages', Math.ceil(count / itemsPerPage))
             return res.json(clientes)
         } catch (e) {
             return res.json(e.message)

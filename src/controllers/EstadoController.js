@@ -4,11 +4,16 @@ module.exports = {
     async search(req, res) {
         const { id } = req.params
         const estados = await connection('estados').where('id', id).select(['id', 'estado'])
+
+        if (estados.length == 0)
+            return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
         return res.json(estados)
     },
     async list(req, res) {
+        const itemsPerPage = 10
         const { page = 1 } = req.query
-        const [count] = await connection('estados').count()
+        const [{ count }] = await connection('estados').count()
 
         const estados = await connection('estados')
             .orderBy('id')
@@ -16,7 +21,11 @@ module.exports = {
             .offset((page - 1) * 5)
             .select(['id', 'estado'])
 
-        res.header('X-Total-Count', count['count'])
+        if (estados.length == 0)
+            return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
+        res.header('X-Total-Count', count)
+        res.header('X-Total-Pages', Math.ceil(count / itemsPerPage))
         return res.json(estados)
     },
     async create(req, res) {

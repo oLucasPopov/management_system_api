@@ -8,20 +8,29 @@ module.exports = {
             .where('cidades.id', id)
             .select(['cidades.id', 'cidades.cidade', 'cidades.id_estado', 'estados.estado'])
 
+        if (cidades.length == 0)
+            return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
         return res.json(cidades)
     },
 
     async list(req, res) {
+        const itemsPerPage = 10
         const { page = 1 } = req.params
-        const [count] = await connection('cidades').count()
+        const [{ count }] = await connection('cidades').count()
         const cidades = await connection('cidades')
             .limit(10)
-            .offset((page - 1) * 5)
+            .offset((page - 1) * itemsPerPage)
             .join('estados', 'estados.id', '=', 'cidades.id_estado')
             .select(['cidades.id', 'cidades.cidade', 'cidades.id_estado', 'estados.estado'])
             .orderBy('estados.estado')
 
-        res.header('X-Total-Count', count['count'])
+        if (cidades.length == 0)
+            return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
+        res.header('X-Total-Count', count)
+        res.header('X-Total-Pages', Math.ceil(count / itemsPerPage))
+
         return res.json(cidades)
     },
 
@@ -51,10 +60,10 @@ module.exports = {
             const { id, id_estado, cidade } = req.body
 
             const [estados = count] = await connection('cidades')
-                .whereNot({id})
-                .andWhere({id_estado, cidade})
+                .whereNot({ id })
+                .andWhere({ id_estado, cidade })
                 .count()
-                
+
             if (estados.count > 0) throw { code: '23505' }
 
             await connection('cidades')

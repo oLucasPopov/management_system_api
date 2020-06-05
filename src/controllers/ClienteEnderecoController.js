@@ -7,6 +7,10 @@ module.exports = {
         const enderecos = await connection('cliente_enderecos')
             .where({ id_cliente })
             .select('*')
+
+        if (enderecos.length == 0)
+            return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
         return res.json(enderecos)
     },
     async create(req, res) {

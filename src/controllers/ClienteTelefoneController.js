@@ -7,6 +7,10 @@ module.exports = {
         const telefones = await connection('cliente_telefones')
             .where({ id_cliente })
             .select('*')
+
+        if (telefones.length == 0)
+            return res.status(404).json({ msg: 'Nenhum registro encontrado!' })
+
         return res.json(telefones)
     },
     async create(req, res) {
@@ -36,7 +40,7 @@ module.exports = {
                 numero,
                 tipo
             } = req.body
-            const { id }= req.params
+            const { id } = req.params
             const result = validationResult(req)
 
             if (result.isEmpty()) {
@@ -56,7 +60,7 @@ module.exports = {
         try {
             const { id } = req.params
             await connection('cliente_telefones').where({ id }).delete()
-            return res.sendStatus(200)
+            return res.sendStatus(204)
         } catch (e) {
             return res.json(e)
         }

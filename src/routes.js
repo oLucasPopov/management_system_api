@@ -35,4 +35,19 @@ routes.get('/cliente_telefones/:id_cliente', ClienteTelefoneController.search)
 routes.put('/cliente_telefones/:id', validations.clienteTelefone, ClienteTelefoneController.update)
 routes.delete('/cliente_telefones/:id', ClienteTelefoneController.delete)
 
+const CategoriasController = require('./controllers/CategoriasController')
+routes.post('/categorias', validations.categoria, CategoriasController.create)
+routes.get('/categorias/list/:page', CategoriasController.list)
+routes.get('/categorias/:id', CategoriasController.search)
+routes.put('/categorias/:id', validations.categoria, CategoriasController.update)
+routes.delete('/categorias/:id', CategoriasController.delete)
+ 
+const SubcategoriasController = require('./controllers/SubcategoriasController')
+routes.post('/subcategorias', validations.subcategoria, SubcategoriasController.create)
+routes.get('/subcategorias/list/:page', validations.subcategoria, SubcategoriasController.list)
+routes.get('/subcategorias/:id_categoria', SubcategoriasController.search)
+routes.put('/subcategorias/:id', validations.subcategoria, SubcategoriasController.update)
+routes.delete('/subcategorias/:id', SubcategoriasController.delete)
+
+
 module.exports = routes;
