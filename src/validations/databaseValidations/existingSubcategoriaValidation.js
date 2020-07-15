@@ -7,5 +7,5 @@ module.exports = async (data, id = -1, id_categoria = -1) => {
         .andWhereNot({ id })
         .count()
         
-    return count
+    return count > 1
 }

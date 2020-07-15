@@ -41,7 +41,7 @@ routes.get('/categorias/list/:page', CategoriasController.list)
 routes.get('/categorias/:id', CategoriasController.search)
 routes.put('/categorias/:id', validations.categoria, CategoriasController.update)
 routes.delete('/categorias/:id', CategoriasController.delete)
- 
+
 const SubcategoriasController = require('./controllers/SubcategoriasController')
 routes.post('/subcategorias', validations.subcategoria, SubcategoriasController.create)
 routes.get('/subcategorias/list/:page', validations.subcategoria, SubcategoriasController.list)
@@ -49,5 +49,18 @@ routes.get('/subcategorias/:id_categoria', SubcategoriasController.search)
 routes.put('/subcategorias/:id', validations.subcategoria, SubcategoriasController.update)
 routes.delete('/subcategorias/:id', SubcategoriasController.delete)
 
+const MarcasController = require('./controllers/MarcasController')
+routes.post('/marcas', validations.marca, MarcasController.create)
+routes.get('/marcas/list/:page', MarcasController.list)
+routes.get('/marcas/:id', MarcasController.search)
+routes.put('/marcas/:id', validations.marca, MarcasController.update)
+routes.delete('/marcas/:id', MarcasController.delete)
+
+const UnidadesMedidaController = require('./controllers/UnidadesMedidaController')
+routes.post('/unidades', validations.unidadesMedida, UnidadesMedidaController.create)
+routes.get('/unidades/list/:page', UnidadesMedidaController.list)
+routes.get('/unidades/:id', UnidadesMedidaController.search)
+routes.put('/unidades/:id', validations.unidadesMedida, UnidadesMedidaController.update)
+routes.delete('/unidades/:id', UnidadesMedidaController.delete)
 
 module.exports = routes;

@@ -6,5 +6,5 @@ module.exports = async (table, field, data, id = -1) => {
         .andWhereNot({ id })
         .count()
         
-    return count
+    return count >= 1
 }

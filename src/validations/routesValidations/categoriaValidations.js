@@ -5,7 +5,7 @@ module.exports = [
     check('categoria', 'A Descrição da Categoria é obrigatória!').notEmpty(),
     check('categoria', 'Categoria já cadastrada!')
         .custom(async (value, { req }) => {
-            if (await existingRegistryValidation('categorias', 'categoria', req.body.categoria, req.params.id) >= 1)
+            if (await existingRegistryValidation('categorias', 'categoria', req.body.categoria, req.params.id))
                 return Promise.reject()
         })
 ]

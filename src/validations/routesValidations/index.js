@@ -5,6 +5,9 @@ const cidade = require('./cidadeValidations')
 const estado = require('./estadoValidations')
 const categoria = require('./categoriaValidations')
 const subcategoria = require('./subcategoriaValidations')
+const marca = require('./marcaValidations')
+const unidadesMedida = require('./unidadesMedidaValidations')
+const produto = require('./produtoValidations')
 
 module.exports = {
     estado,
@@ -14,4 +17,7 @@ module.exports = {
     clienteEndereco,
     categoria,
     subcategoria,
+    marca,
+    unidadesMedida,
+    produto,
 }
