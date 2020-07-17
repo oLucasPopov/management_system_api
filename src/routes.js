@@ -63,4 +63,11 @@ routes.get('/unidades/:id', UnidadesMedidaController.search)
 routes.put('/unidades/:id', validations.unidadesMedida, UnidadesMedidaController.update)
 routes.delete('/unidades/:id', UnidadesMedidaController.delete)
 
+const ProdutosController = require('./controllers/ProdutosController')
+routes.post('/produtos', validations.produto, ProdutosController.create)
+routes.get('/produtos/list/:page', ProdutosController.list)
+routes.get('/produtos/:id', ProdutosController.search)
+routes.put('/produtos/:id', validations.produto, ProdutosController.update)
+routes.delete('/produtos/:id', ProdutosController.delete)
+
 module.exports = routes;
