@@ -8,6 +8,7 @@ const subcategoria = require('./subcategoriaValidations')
 const marca = require('./marcaValidations')
 const unidadesMedida = require('./unidadesMedidaValidations')
 const produto = require('./produtoValidations')
+const composicaoProduto = require('./composicaoProdutoValidations')
 
 module.exports = {
     estado,
@@ -20,4 +21,5 @@ module.exports = {
     marca,
     unidadesMedida,
     produto,
+    composicaoProduto,
 }

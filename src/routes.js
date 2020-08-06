@@ -70,4 +70,9 @@ routes.get('/produtos/:id', ProdutosController.search)
 routes.put('/produtos/:id', validations.produto, ProdutosController.update)
 routes.delete('/produtos/:id', ProdutosController.delete)
 
+const ComposicaoProdutosController = require('./controllers/ComposicaoProdutosController')
+routes.post('/composicaoProduto', validations.composicaoProduto, ComposicaoProdutosController.create)
+routes.get('/composicaoProduto/list/:pro_codigo', ComposicaoProdutosController.list)
+routes.delete('/composicaoProduto/:id', ComposicaoProdutosController.delete)
+
 module.exports = routes;
